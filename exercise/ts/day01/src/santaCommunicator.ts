@@ -1,26 +1,39 @@
-import {Logger} from "./logger";
+import { Logger } from './logger'
+
+interface Raindeer {
+  name: string
+  currentLocation: string
+  numberOfDaysForComingBack: number
+  numberOfDaysToRest: number
+}
 
 export class SantaCommunicator {
-    private readonly numberOfDaysToRest: number;
+  constructor(private raindeer: Raindeer) {}
 
-    constructor(numberOfDaysToRest: number) {
-        this.numberOfDaysToRest = numberOfDaysToRest;
-    }
+  public composeMessage(numberOfDaysBeforeChristmas: number): string {
+    const daysBeforeReturn = this.daysBeforeReturn(numberOfDaysBeforeChristmas)
+    return `Dear ${this.raindeer.name}, please return from ${this.raindeer.currentLocation} in ${daysBeforeReturn} day(s) to be ready and rest before Christmas.`
+  }
 
-    public composeMessage(reindeerName: string, currentLocation: string, numbersOfDaysForComingBack: number, numberOfDaysBeforeChristmas: number): string {
-        const daysBeforeReturn = this.daysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas);
-        return `Dear ${reindeerName}, please return from ${currentLocation} in ${daysBeforeReturn} day(s) to be ready and rest before Christmas.`;
+  public isOverdue(
+    raindeer,
+    numberOfDaysBeforeChristmas: number,
+    logger: Logger
+  ): boolean {
+    if (this.daysBeforeReturn(numberOfDaysBeforeChristmas) <= 0) {
+      logger.log(
+        `Overdue for ${raindeer.name} located ${raindeer.currentLocation}.`
+      )
+      return true
     }
+    return false
+  }
 
-    public isOverdue(reindeerName: string, currentLocation: string, numbersOfDaysForComingBack: number, numberOfDaysBeforeChristmas: number, logger: Logger): boolean {
-        if (this.daysBeforeReturn(numbersOfDaysForComingBack, numberOfDaysBeforeChristmas) <= 0) {
-            logger.log(`Overdue for ${reindeerName} located ${currentLocation}.`);
-            return true;
-        }
-        return false;
-    }
-
-    private daysBeforeReturn(numbersOfDaysForComingBack: number, numberOfDaysBeforeChristmas: number): number {
-        return numberOfDaysBeforeChristmas - numbersOfDaysForComingBack - this.numberOfDaysToRest;
-    }
+  private daysBeforeReturn(numberOfDaysBeforeChristmas: number): number {
+    return (
+      numberOfDaysBeforeChristmas -
+      this.raindeer.numberOfDaysForComingBack -
+      this.raindeer.numberOfDaysToRest
+    )
+  }
 }
