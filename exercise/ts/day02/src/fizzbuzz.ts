@@ -1,27 +1,27 @@
-import {none, Option, some} from "fp-ts/Option";
+import { none, Option, some } from 'fp-ts/Option'
 
-export const min = 1;
-export const max = 100;
+export const min = 1
+export const max = 100
 
-let mapping: Map<number, string> = new Map([
-    [15, 'FizzBuzz'],
-    [3, 'Fizz'],
-    [5, 'Buzz'],
-]);
+export const fizzbuzz = (
+  input: number,
+  mapping: Map<number, string>
+): Option<string> =>
+  isOutOfRange(input) ? none : some(convertSafely(input, mapping))
 
-export const fizzbuzz = (input: number): Option<string> =>
-    isOutOfRange(input)
-        ? none
-        : some(convertSafely(input));
-
-function convertSafely(input: number): string {
-    for (const [divisor, value] of mapping) {
-        if (is(divisor, input)) {
-            return value;
-        }
+function convertSafely(input: number, mapping): string {
+  let result = ''
+  for (const [divisor, value] of mapping) {
+    if (isDivisible(divisor, input)) {
+      result += value
     }
-    return input.toString();
+  }
+  if (result === '') {
+    result = input.toString()
+  }
+  return result
 }
 
-const is = (divisor: number, input: number): boolean => input % divisor === 0;
-const isOutOfRange = (input: number): boolean => input < min || input > max;
+const isDivisible = (divisor: number, input: number): boolean =>
+  input % divisor === 0
+const isOutOfRange = (input: number): boolean => input < min || input > max
