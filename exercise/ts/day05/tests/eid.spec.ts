@@ -1,5 +1,10 @@
+const makeEid = () => {
+  return '11111111'
+}
+
 describe('EID', () => {
-    test('implement your tests here', () => {
-        expect(43).toBe(42);
-    });
-});
+  test('eid should be 8 digits long', () => {
+    const eid = makeEid()
+    expect(eid.length).toBe(8)
+  })
+})
