@@ -1,13 +1,12 @@
 const eidFactory = () => {
   let birthOrder = 1
+  const sexMap = new Map([
+    ['Sloubi', '1'],
+    ['Gagna', '2'],
+    ['Catact', '3'],
+  ])
 
   return (sex, birthYear) => {
-    const sexMap = new Map([
-      ['Sloubi', '1'],
-      ['Gagna', '2'],
-      ['Catact', '3'],
-    ])
-
     let eid = ''
 
     eid += sexMap.get(sex)
