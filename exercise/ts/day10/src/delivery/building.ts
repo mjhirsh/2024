@@ -9,7 +9,7 @@ export class Building {
             } else if (instructions.includes('🧝')) {
                 const j = c === ')' ? 3 : -2;
                 result += j;
-            } else if (!instructions.includes('🧝')) {
+            } else {
                 const j = c === '(' ? 1 : -1;
                 result += j;
             }
