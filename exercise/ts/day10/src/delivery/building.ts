@@ -1,6 +1,6 @@
 export class Building {
     static whichFloor(instructions: string): number {
-        let val: Array<number> = [];
+        let result = 0;
 
         for (let i = 0; i < instructions.length; i++) {
             const c = instructions[i];
@@ -8,15 +8,11 @@ export class Building {
                 continue;
             } else if (instructions.includes('🧝')) {
                 const j = c === ')' ? 3 : -2;
-                val.push(j);
+                result += j;
             } else if (!instructions.includes('🧝')) {
-                val.push(c === '(' ? 1 : -1);
+                const j = c === '(' ? 1 : -1;
+                result += j;
             }
-        }
-
-        let result = 0;
-        for (const kp of val) {
-            result += kp;
         }
 
         return result;
