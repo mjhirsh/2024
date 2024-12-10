@@ -1,20 +1,32 @@
 export class Building {
     static whichFloor(instructions: string): number {
-        let result = 0;
+        let floor = 0;
 
         for (let i = 0; i < instructions.length; i++) {
-            const c = instructions[i];
-            if (c !== '(' && c !== ')') {
+            const character = instructions[i];
+            if (this.isInvalidCharacter(character)) {
                 continue;
             } else if (instructions.includes('🧝')) {
-                const j = c === ')' ? 3 : -2;
-                result += j;
+                floor += this.modifierForInstructionsWithEmoji(character);
             } else {
-                const j = c === '(' ? 1 : -1;
-                result += j;
+                floor += this.modifierForInstructionsWithoutEmoji(character);
             }
         }
 
-        return result;
+        return floor;
+    }
+
+    private static modifierForInstructionsWithoutEmoji(
+        character: string
+    ): number {
+        return character === '(' ? 1 : -1;
+    }
+
+    private static modifierForInstructionsWithEmoji(character) {
+        return character === ')' ? 3 : -2;
+    }
+
+    private static isInvalidCharacter(character: string): boolean {
+        return character !== '(' && character !== ')';
     }
 }
