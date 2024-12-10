@@ -4,14 +4,13 @@ export class Building {
 
         for (let i = 0; i < instructions.length; i++) {
             const c = instructions[i];
-
-            if (instructions.includes("🧝")) {
+            if (c !== '(' && c !== ')') {
+                continue;
+            } else if (instructions.includes('🧝')) {
                 const j = c === ')' ? 3 : -2;
                 val.push([c, j]);
-            } else if (!instructions.includes("🧝")) {
+            } else if (!instructions.includes('🧝')) {
                 val.push([c, c === '(' ? 1 : -1]);
-            } else {
-                val.push([c, c === '(' ? 42 : -2]);
             }
         }
 
